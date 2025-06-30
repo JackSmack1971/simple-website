@@ -17,8 +17,8 @@ This project is a modern, responsive website template built with **HTML5**, **CS
 
 ## File Structure
 ```
+css/             Site styles organized with BEM methodology
 assets/
-  css/            Site styles organized with BEM methodology
   js/             JavaScript modules for navigation and utilities
   images/         Optimized graphics
 content/          Sample JSON data for articles and research papers
@@ -51,7 +51,7 @@ Run `npm run build` and upload the generated `dist/` directory to any static hos
 
 ## Customization Guide
 - **Add New Sections**: Copy an existing page from `pages/` and modify it to cover a new topic (e.g., "Tutorials"). Update navigation links in `index.html`.
-- **Styling**: Edit or extend styles in `assets/css/`. Keep classes in BEM format and test on mobile as well as desktop.
+- **Styling**: Edit or extend styles in `css/`. Keep classes in BEM format and test on mobile as well as desktop.
 - **Scripts**: Modify `assets/js/` modules to add functionality. For any API calls, place keys in environment variables, validate inputs, and add retry logic with timeouts.
 - **Content Topics**: Replace sample files in `content/` with your own datasets. Use consistent naming to make filtering easier.
 

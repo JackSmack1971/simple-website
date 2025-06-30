@@ -131,10 +131,10 @@ initialize_package_json() {
     "start": "live-server --host=localhost --port=3000 --open=/index.html",
     "dev": "concurrently \"npm run watch:css\" \"npm run start\"",
     "build": "npm run build:css && npm run build:js && npm run copy:assets",
-    "build:css": "postcss assets/css/main.css -o dist/css/main.css --env production",
+    "build:css": "postcss css/main.css -o dist/css/main.css --env production",
     "build:js": "mkdir -p dist/js && cp -r assets/js/* dist/js/",
     "copy:assets": "mkdir -p dist/images && cp -r assets/images/* dist/images/ && cp *.html dist/",
-    "watch:css": "postcss assets/css/main.css -o assets/css/compiled.css --watch",
+    "watch:css": "postcss css/main.css -o css/compiled.css --watch",
     "lint": "eslint assets/js/**/*.js",
     "lint:fix": "eslint assets/js/**/*.js --fix",
     "validate:html": "html-validate *.html pages/**/*.html",
@@ -364,7 +364,7 @@ This is a modern, responsive website template for Generative AI news and researc
 
 ## File Structure
 - \`/pages/\` - Individual page templates
-- \`/assets/css/\` - Stylesheets with component organization
+- \`/css/\` - Stylesheets with component organization
 - \`/assets/js/\` - JavaScript modules
 - \`/content/\` - JSON data files for content management
 
@@ -407,7 +407,7 @@ create_base_files() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Latest news and research in Generative AI">
     <title>Generative AI Hub - News & Research</title>
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 </head>
 <body>
@@ -462,7 +462,7 @@ create_base_files() {
 EOF
     
     # Create basic CSS
-    cat > assets/css/main.css << 'EOF'
+    cat > css/main.css << 'EOF'
 /* Generative AI Website - Main Styles */
 
 /* CSS Reset and Base Styles */
@@ -962,7 +962,7 @@ A modern, responsive website template for Generative AI news and research conten
 ## Customization
 
 1. **Content:** Edit JSON files in `content/` directory
-2. **Styling:** Modify CSS files in `assets/css/`
+2. **Styling:** Modify CSS files in `css/`
 3. **Functionality:** Update JavaScript in `assets/js/`
 4. **Pages:** Add new HTML files in `pages/`
 
@@ -1018,7 +1018,7 @@ finalize_setup() {
     echo -e "\n${YELLOW}Next steps:${NC}"
     echo -e "  1. Run 'npm run dev' to start development server"
     echo -e "  2. Edit content in the 'content/' directory"
-    echo -e "  3. Customize styles in 'assets/css/main.css'"
+    echo -e "  3. Customize styles in 'css/main.css'"
     echo -e "  4. Add your own images to 'assets/images/'"
     echo -e "\n${BLUE}Happy coding! 🚀${NC}\n"
 }

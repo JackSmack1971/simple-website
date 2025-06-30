@@ -233,6 +233,7 @@ body.site--dark {
 /* Responsive images */
 .post__figure {
     margin: 0 0 1rem;
+    aspect-ratio: 2 / 1;
 }
 
 .post__image {

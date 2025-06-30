@@ -1,0 +1,12 @@
+[
+    {
+        "title": "Diffusion Models for Image Synthesis",
+        "category": "Vision",
+        "summary": "This paper explores diffusion models for high-resolution image synthesis..."
+    },
+    {
+        "title": "Large Language Models as Zero-Shot Translators",
+        "category": "NLP",
+        "summary": "We investigate how large language models perform translation tasks..."
+    }
+]

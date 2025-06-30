@@ -12,7 +12,7 @@
     "testEnvironment": "node",
     "transform": {},
     "collectCoverageFrom": [
-      "assets/js/filter.cjs"
+      "assets/js/filter.cjs", "assets/js/main.js"
     ],
     "testMatch": [
       "**/?(*.)+(test).cjs"

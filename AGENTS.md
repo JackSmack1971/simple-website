@@ -4,8 +4,7 @@
 ```
 simple-website/
 ├── index.html              # Main HTML template
-├── style.css              # Current styles (to be refactored)
-├── script.js              # Basic JavaScript (to be enhanced)
+├── css/                   # Stylesheets (style.css, performance-optimized.css)
 ├── content/               # Content files and data
 ├── assets/                # Images, fonts, icons
 └── docs/                  # Documentation

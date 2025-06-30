@@ -1,51 +1,65 @@
 # Generative AI Hub Template
 
-This repository contains a modern, responsive website template for Generative AI news and research. It is built with HTML5, CSS3, and vanilla JavaScript following a mobile-first approach and BEM methodology.
+This project is a modern, responsive website template built with **HTML5**, **CSS3**, and **vanilla JavaScript**. It is designed for publishing Generative AI news and research while following accessibility and performance best practices.
 
-## Features
-- Homepage with hero section and featured content
-- News section with article listings and individual article pages
-- Research section with paper summaries and categories
-- About and Contact pages
-- Navigation menu with active states
-- Dark/light mode toggle
-- Newsletter signup form and search placeholders
-- Social media integration placeholders
+## Project Setup
+1. **Clone the repository** and install dependencies for optional tooling:
+   ```bash
+   git clone <repo-url>
+   cd simple-website
+   npm install      # optional: required only for running tests or build scripts
+   ```
+2. **Serve the site locally**. Any static HTTP server will work. For quick testing:
+   ```bash
+   npx http-server -p 8080
+   ```
+   Then open `http://localhost:8080/index.html` in your browser.
 
 ## File Structure
 ```
 assets/
-  css/style.css   - site styles
-  js/main.js      - navigation and theme logic
-  images/         - image assets
-content/          - sample content in JSON
-pages/
-  news.html       - news listing
-  research.html   - research listing
-  about.html      - about page
-  contact.html    - contact form
-  article.html    - sample news article
-  paper.html      - sample research paper
-index.html        - homepage
+  css/            Site styles organized with BEM methodology
+  js/             JavaScript modules for navigation and utilities
+  images/         Optimized graphics
+content/          Sample JSON data for articles and research papers
+pages/            Individual HTML page templates
+index.html        Homepage
 ```
+These directories match the recommendations in `AGENTS.md` and keep styles, scripts, images, and content logically separated.
 
-## Setup
-1. Clone the repository.
-2. Open `index.html` in your browser or serve the directory with a local HTTP server:
+## Content Management Guidelines
+- **Articles and Research**: Add or edit JSON files in `content/` to update posts.
+- **Schema Markup**: Each news article should include structured data following [Schema.org](https://schema.org/Article) guidelines.
+- **Accessibility**: Use semantic HTML tags and keep contrast ratios high to satisfy WCAG&nbsp;2.1&nbsp;AA.
+- **BEM CSS**: Follow the Block&nbsp;-- Element&nbsp;-- Modifier convention for class names (e.g., `post__title`, `nav__menu--open`).
+
+## Deployment
+### GitHub Pages
+1. Ensure dependencies are installed: `npm install`.
+2. Build the site:
    ```bash
-   python3 -m http.server
+   npm run build
    ```
-3. Navigate the site to explore different sections.
+3. Deploy with:
+   ```bash
+   npm run deploy
+   ```
+This uses the `gh-pages` package to push the contents of the `dist/` folder to the `gh-pages` branch.
 
-## Development
-- CSS uses the BEM naming convention and relies on modern Flexbox and CSS Grid.
-- JavaScript provides progressive enhancement for navigation and dark mode.
-- Pages are fully responsive and meet WCAG 2.1 AA guidelines.
+### Other Hosts
+Run `npm run build` and upload the generated `dist/` directory to any static host (Netlify, Vercel, traditional web servers, etc.).
 
-## Testing Checklist
-- [ ] Verify layout and functionality in Chrome, Firefox, Safari, and Edge.
-- [ ] Test mobile responsiveness using browser developer tools.
-- [ ] Run accessibility checks (e.g., Lighthouse, axe).
-- [ ] Confirm fast loading and good Core Web Vitals metrics.
+## Customization Guide
+- **Add New Sections**: Copy an existing page from `pages/` and modify it to cover a new topic (e.g., "Tutorials"). Update navigation links in `index.html`.
+- **Styling**: Edit or extend styles in `assets/css/`. Keep classes in BEM format and test on mobile as well as desktop.
+- **Scripts**: Modify `assets/js/` modules to add functionality. For any API calls, place keys in environment variables, validate inputs, and add retry logic with timeouts.
+- **Content Topics**: Replace sample files in `content/` with your own datasets. Use consistent naming to make filtering easier.
 
-Feel free to customize the template with your own content and styles.
+## Testing and Quality Checks
+- Cross-browser verification (Chrome, Firefox, Safari, Edge)
+- Mobile responsiveness checks via browser tools
+- Accessibility validation using Lighthouse or similar tools
+- Performance optimization to maintain good Core Web Vitals
+- Automated unit tests can be run with `npm test`
+
+Feel free to adapt this template for your own Generative AI or tech-related website. Contributions are welcome!

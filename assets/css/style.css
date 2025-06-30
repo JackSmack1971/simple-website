@@ -1,4 +1,21 @@
 html { scroll-behavior: smooth; }
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+.skip-link:focus {
+    left: 0;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    background: var(--header-bg);
+    color: var(--text-color);
+    text-decoration: none;
+}
 /* Base styles */
 body {
     margin: 0;
@@ -21,6 +38,7 @@ body.site--dark {
     --text-color: #e0e0e0;
     --header-bg: #2d2d2d;
     --footer-bg: #2d2d2d;
+    --link-color: #7081ff;
 }
 
 .site__header {
@@ -291,6 +309,25 @@ body.site--dark {
 .share__link {
     color: var(--link-color);
     text-decoration: none;
+}
+
+/* Focus states */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
 }
 @media print {
     .site__header,

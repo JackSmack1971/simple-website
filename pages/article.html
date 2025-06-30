@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI News Article">
+    <meta name="author" content="Admin">
+    <link rel="canonical" href="https://example.com/pages/article.html">
+    <meta property="og:title" content="AI Breakthrough in Generative Models">
+    <meta property="og:description" content="This article discusses a significant leap forward in generative AI technology, enabling new forms of content creation and automation...">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="../assets/images/article-800.txt">
     <title>News Article - Generative AI Hub</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/filter.cjs"></script>
     <script defer src="../assets/js/main.js"></script>
     <script type="application/ld+json">
     {
@@ -38,7 +45,10 @@
     <main class="site__content">
         <article class="post">
             <h2 class="post__title">AI Breakthrough in Generative Models</h2>
-            <p class="post__meta">April 1, 2024 by Admin</p>
+            <p class="post__meta"><time datetime="2024-04-01">April 1, 2024</time> by Admin</p>
+            <figure class="post__figure">
+                <img class="post__image" src="../assets/images/article-800.txt" srcset="../assets/images/article-400.txt 400w, ../assets/images/article-800.txt 800w, ../assets/images/article-1200.txt 1200w" sizes="(max-width: 600px) 100vw, 800px" alt="Abstract generative AI concept">
+            </figure>
             <p class="post__content">This article discusses a significant leap forward in generative AI technology, enabling new forms of content creation and automation...</p>
         </article>
     </main>

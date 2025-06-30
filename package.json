@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.0.2",
+    "jsdom": "^22.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "collectCoverageFrom": [
+      "assets/js/filter.cjs"
+    ],
+    "testMatch": [
+      "**/?(*.)+(test).cjs"
+    ]
+  }
+}

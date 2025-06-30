@@ -29,4 +29,11 @@
     } else {
         fadeElements.forEach(el => el.classList.add('is-visible'));
     }
+
+    if (window.filterUtils) {
+        const { setupSearch, setupCategoryFilter } = window.filterUtils;
+        setupSearch('#news-search', '.news-list');
+        setupSearch('#paper-search', '.paper-list');
+        setupCategoryFilter('#category-filter', '.paper-list');
+    }
 })();

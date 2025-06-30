@@ -6,6 +6,7 @@
     <meta name="description" content="Generative AI Research Papers">
     <title>Research - Generative AI Hub</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/filter.cjs"></script>
     <script defer src="../assets/js/main.js"></script>
 </head>
 <body class="site site--light">
@@ -33,6 +34,14 @@
                 <input type="search" id="paper-search" class="search__input" placeholder="Search papers">
                 <button type="submit" class="button">Search</button>
             </form>
+            <div class="search__filter">
+                <label for="category-filter" class="search__label">Category</label>
+                <select id="category-filter" class="search__select">
+                    <option value="all">All</option>
+                    <option value="Vision">Vision</option>
+                    <option value="NLP">NLP</option>
+                </select>
+            </div>
         </section>
         <section class="paper-list">
             <h2 class="paper-list__title">Recent Papers</h2>

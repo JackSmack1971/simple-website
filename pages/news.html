@@ -10,6 +10,7 @@
     <script defer src="../assets/js/main.js"></script>
 </head>
 <body class="site site--light">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="loader" aria-hidden="true"><div class="loader__spinner"></div></div>
     <header class="site__header">
         <div class="header__inner">
@@ -28,7 +29,7 @@
         </div>
     </header>
 
-    <main class="site__content">
+    <main id="main-content" class="site__content">
         <section class="search">
             <form class="search__form" action="#" method="get">
                 <label for="news-search" class="search__label">Search News</label>
@@ -38,7 +39,7 @@
         </section>
         <section class="news-list">
             <h2 class="news-list__title">Latest News</h2>
-            <div class="news-list__grid">
+            <div class="news-list__grid" aria-live="polite">
                 <article class="post">
                     <figure class="post__figure">
                         <img class="post__image" src="../assets/images/article-400.txt" alt="Abstract generative AI concept">

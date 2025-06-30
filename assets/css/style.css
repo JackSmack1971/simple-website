@@ -191,3 +191,33 @@ body.site--dark {
         transition: none !important;
     }
 }
+
+/* Search and filter */
+.search {
+    margin-bottom: 1rem;
+}
+
+.search__form,
+.search__filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.search__input,
+.search__select {
+    padding: 0.25rem;
+    font-size: 1rem;
+}
+
+/* Responsive images */
+.post__figure {
+    margin: 0 0 1rem;
+}
+
+.post__image {
+    width: 100%;
+    height: auto;
+    display: block;
+}

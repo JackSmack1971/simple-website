@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Research Paper Summary">
+    <link rel="canonical" href="https://example.com/pages/paper.html">
+    <meta property="og:title" content="Diffusion Models for Image Synthesis">
+    <meta property="og:description" content="This research introduces a novel diffusion-based approach for generating realistic images.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="../assets/images/paper-800.txt">
     <title>Research Paper - Generative AI Hub</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script defer src="../assets/js/filter.cjs"></script>
     <script defer src="../assets/js/main.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Diffusion Models for Image Synthesis",
+        "author": [
+            {"@type": "Person", "name": "Alice Researcher"},
+            {"@type": "Person", "name": "Bob Scientist"}
+        ],
+        "datePublished": "2024-02-15",
+        "url": "https://example.com/pages/paper.html"
+    }
+    </script>
 </head>
 <body class="site site--light">
     <header class="site__header">
@@ -30,7 +49,12 @@
         <article class="post">
             <h2 class="post__title">Diffusion Models for Image Synthesis</h2>
             <p class="post__meta">Category: Vision</p>
-            <p class="post__content">This research introduces a novel diffusion-based approach for generating realistic images. Experimental results show state-of-the-art performance on multiple benchmarks...</p>
+            <figure class="post__figure">
+                <img class="post__image" src="../assets/images/paper-800.txt" srcset="../assets/images/paper-400.txt 400w, ../assets/images/paper-800.txt 800w, ../assets/images/paper-1200.txt 1200w" sizes="(max-width: 600px) 100vw, 800px" alt="Diffusion model illustration">
+            </figure>
+            <p class="post__abstract"><strong>Abstract:</strong> This research introduces a novel diffusion-based approach for generating realistic images. Experimental results show state-of-the-art performance on multiple benchmarks.</p>
+            <p class="post__authors"><strong>Authors:</strong> Alice Researcher, Bob Scientist</p>
+            <p class="post__links"><a href="#" class="post__link">Read Paper</a> | <a href="#" class="post__link">Source Code</a></p>
         </article>
     </main>
 

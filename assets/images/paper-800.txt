@@ -1,0 +1,3 @@
+Placeholder image
+Optimal size: 800x400 px @72dpi
+Format: JPEG

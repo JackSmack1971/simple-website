@@ -5,6 +5,7 @@
 # Description: Automated setup for Generative AI news and research website
 
 set -e  # Exit on any error
+trap rollback ERR
 
 # Color codes for output
 RED='\033[0;31m'
@@ -108,7 +109,7 @@ create_project_structure() {
     print_step "Creating project directory structure..."
     
     # Create main directories
-    mkdir -p {pages/{news,research},assets/{css/{components,pages},js/modules,images},content/{news,research},docs}
+    mkdir -p {pages/{news,research},assets/{css/{components,pages},js/modules,images},content/{news,research},docs,templates}
     
     # Create build and development directories
     mkdir -p {dist,src,scripts}
@@ -694,8 +695,192 @@ liveServer.start(params);
 EOF
     
     chmod +x scripts/dev-server.js
-    
+
     print_success "Development scripts created"
+}
+
+# Generate favicons using favicons CLI
+generate_favicons() {
+    print_step "Generating favicons..."
+    if command_exists npx && [ -f assets/images/logo.png ]; then
+        npx favicons assets/images/logo.png -o assets/images/favicons >/dev/null 2>&1 && \
+        cp assets/images/favicons/favicon.ico assets/images/favicon.ico && \
+        print_success "Favicons generated" || print_warning "Favicon generation failed"
+    else
+        print_warning "Favicons skipped - requirements not met"
+    fi
+}
+
+# Setup Progressive Web App files
+setup_pwa() {
+    print_step "Setting up PWA configuration..."
+    cat > manifest.json << EOF
+{
+  "name": "Generative AI Hub",
+  "short_name": "AI Hub",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#202020",
+  "icons": [
+    { "src": "assets/images/favicon.ico", "sizes": "64x64", "type": "image/x-icon" }
+  ]
+}
+EOF
+    print_success "PWA manifest.json created"
+}
+
+# Install performance tools
+setup_performance_tools() {
+    print_step "Adding performance optimization tools..."
+    npm install --save-dev lighthouse workbox-cli >/dev/null 2>&1 && \
+    print_success "Performance tools installed" || print_warning "Failed to install performance tools"
+}
+
+# Generate SEO meta tag template
+generate_seo_template() {
+    print_step "Generating SEO meta tag template..."
+    cat > templates/seo.html <<'EOF'
+<!-- SEO Meta Tags -->
+<meta name="description" content="">
+<meta property="og:title" content="">
+<meta property="og:description" content="">
+<meta property="og:image" content="">
+EOF
+    print_success "SEO template created"
+}
+
+# Configure TypeScript if requested
+configure_typescript() {
+    if [ "$USE_TS" = "yes" ]; then
+        print_step "Setting up TypeScript..."
+        npm install --save-dev typescript ts-node @types/node >/dev/null 2>&1 && \
+        npx tsc --init >/dev/null 2>&1 && \
+        print_success "TypeScript configured" || print_warning "TypeScript setup failed"
+    fi
+}
+
+# Setup Jest testing framework
+setup_testing_framework() {
+    print_step "Configuring testing framework..."
+    npm install --save-dev jest >/dev/null 2>&1 && \
+    cat > jest.config.js <<'EOF'
+module.exports = { testEnvironment: 'node' };
+EOF
+    print_success "Jest configured" || print_warning "Jest setup failed"
+}
+
+# Create Docker development environment
+setup_docker() {
+    if [ "$USE_DOCKER" = "yes" ]; then
+        print_step "Creating Docker environment..."
+        cat > Dockerfile <<'EOF'
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN npm install
+CMD ["npm", "run", "dev"]
+EOF
+        print_success "Dockerfile created"
+    fi
+}
+
+# Prompt for optional features
+prompt_user_options() {
+    while true; do
+        read -r -p "Use TypeScript? (yes/no) [no]: " USE_TS
+        USE_TS=${USE_TS:-no}
+        case "$USE_TS" in
+            yes|no) break ;;
+            *) echo "Please answer yes or no.";;
+        esac
+    done
+    while true; do
+        read -r -p "Create Docker environment? (yes/no) [no]: " USE_DOCKER
+        USE_DOCKER=${USE_DOCKER:-no}
+        case "$USE_DOCKER" in
+            yes|no) break ;;
+            *) echo "Please answer yes or no.";;
+        esac
+    done
+}
+
+# Choose CSS framework
+setup_css_framework() {
+    while true; do
+        read -r -p "Select CSS framework (none/tailwind/bootstrap) [none]: " CSS_FW
+        CSS_FW=${CSS_FW:-none}
+        case "$CSS_FW" in
+            none|tailwind|bootstrap) break ;;
+            *) echo "Options: none, tailwind, bootstrap";;
+        esac
+    done
+    case "$CSS_FW" in
+        tailwind)
+            npm install --save-dev tailwindcss >/dev/null 2>&1 && npx tailwindcss init >/dev/null 2>&1 && print_success "Tailwind configured" || print_warning "Tailwind setup failed"
+            ;;
+        bootstrap)
+            npm install bootstrap >/dev/null 2>&1 && print_success "Bootstrap installed" || print_warning "Bootstrap setup failed"
+            ;;
+        *)
+            print_info "No CSS framework selected"
+            ;;
+    esac
+}
+
+# Setup basic SQLite database
+setup_database() {
+    while true; do
+        read -r -p "Setup SQLite database? (yes/no) [no]: " USE_DB
+        USE_DB=${USE_DB:-no}
+        case "$USE_DB" in
+            yes|no) break ;;
+            *) echo "Please answer yes or no.";;
+        esac
+    done
+    if [ "$USE_DB" = "yes" ]; then
+        mkdir -p data && touch data/database.sqlite && print_success "SQLite database initialized"
+    fi
+}
+
+# Deployment configs for Vercel and Netlify
+setup_deployment_configs() {
+    print_step "Creating deployment configuration..."
+    cat > vercel.json <<'EOF'
+{
+  "rewrites": [{ "source": "**", "destination": "/index.html" }]
+}
+EOF
+    cat > netlify.toml <<'EOF'
+[build]
+  publish = "dist"
+[dev]
+  command = "npm run dev"
+EOF
+    print_success "Deployment configs created"
+}
+
+# Environment configuration templates
+setup_env_configs() {
+    print_step "Creating environment configuration..."
+    cat > .env.example <<'EOF'
+NODE_ENV=development
+PORT=3000
+EOF
+    print_success ".env template created"
+}
+
+# Setup image optimization pipeline
+setup_image_pipeline() {
+    print_step "Configuring image optimization..."
+    npm install --save-dev sharp-cli >/dev/null 2>&1 && \
+    mkdir -p scripts && cat > scripts/optimize-images.js <<'EOF'
+#!/usr/bin/env node
+const {execSync}=require('child_process');
+execSync('npx sharp-cli assets/images/* --resize 1024 -o assets/images');
+EOF
+    chmod +x scripts/optimize-images.js
+    print_success "Image optimization pipeline ready"
 }
 
 # Setup git repository
@@ -838,11 +1023,18 @@ finalize_setup() {
     echo -e "\n${BLUE}Happy coding! 🚀${NC}\n"
 }
 
+# Rollback function on errors
+rollback() {
+    print_error "Error encountered. Rolling back changes..."
+    rm -rf node_modules package-lock.json dist vercel.json netlify.toml Dockerfile manifest.json templates scripts/optimize-images.js 2>/dev/null
+    exit 1
+}
+
 # Handle script interruption
 cleanup() {
     print_error "Installation interrupted"
     echo -e "\n${YELLOW}Cleaning up...${NC}"
-    # Add cleanup logic here if needed
+    rollback
     exit 1
 }
 
@@ -852,14 +1044,27 @@ trap cleanup INT TERM
 # Main execution
 main() {
     print_header
-    
+
     check_prerequisites
+    prompt_user_options
     create_project_structure
     initialize_package_json
     install_dependencies
+    setup_performance_tools
+    setup_css_framework
+    configure_typescript
+    setup_testing_framework
     create_config_files
+    setup_env_configs
     create_sample_content
     create_base_files
+    setup_pwa
+    generate_seo_template
+    generate_favicons
+    setup_image_pipeline
+    setup_docker
+    setup_deployment_configs
+    setup_database
     create_dev_scripts
     setup_git
     create_readme

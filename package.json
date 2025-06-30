@@ -1,18 +1,22 @@
 {
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "audit": "sh -c 'http-server -p 8080 -s >/dev/null & pid=$!; lighthouse http://localhost:8080 --output=json --output-path=docs/perf-reports/report.json --quiet --chrome-flags=\"--headless\"; kill $pid'"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^30.0.2",
-    "jsdom": "^22.1.0"
+    "jsdom": "^22.1.0",
+    "lighthouse": "^12.7.0"
   },
   "jest": {
     "testEnvironment": "node",
     "transform": {},
     "collectCoverageFrom": [
-      "assets/js/filter.cjs", "assets/js/main.js"
+      "assets/js/filter.cjs",
+      "assets/js/main.js"
     ],
     "testMatch": [
       "**/?(*.)+(test).cjs"

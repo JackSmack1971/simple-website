@@ -14,4 +14,19 @@
         const darkMode = body.classList.toggle('site--dark');
         themeToggle.textContent = darkMode ? '\u263E' : '\u2600';
     });
+
+    const fadeElements = document.querySelectorAll('.fade-in');
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
+    } else {
+        fadeElements.forEach(el => el.classList.add('is-visible'));
+    }
 })();

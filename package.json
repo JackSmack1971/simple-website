@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "audit": "sh -c 'http-server -p 8080 -s >/dev/null & pid=$!; lighthouse http://localhost:8080 --output=json --output-path=docs/perf-reports/report.json --quiet --chrome-flags=\"--headless\"; kill $pid'"
+    "audit": "sh -c 'http-server -p 8080 -s >/dev/null & pid=$!; lighthouse http://localhost:8080 --output=json --output-path=docs/perf-reports/report.json --quiet --chrome-flags=\"--headless --no-sandbox\"; kill $pid'"
   },
   "devDependencies": {
     "http-server": "^14.1.1",

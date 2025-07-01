@@ -183,6 +183,7 @@
      * Toggle the loading state class on the list element.
      * @param {boolean} on - Whether to show the loading state.
      * @returns {void}
+     * @side effects Modifies the DOM.
      */
     setLoading(on) {
       this.list && this.list.classList.toggle('content--loading', on);

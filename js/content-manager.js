@@ -1,4 +1,12 @@
 (function(global){
+  /**
+   * Class responsible for loading and rendering article content.
+   * @class
+   * @param {Object} [options={}]
+   * @param {string} [options.articleUrl='content/sample_articles.json'] - URL to fetch articles.
+   * @param {Storage} [options.storage=window.localStorage] - Storage used for bookmarks.
+   * @param {number} [options.timeout=8000] - Fetch timeout in milliseconds.
+   */
   class ContentManager {
     constructor(options = {}) {
       this.articleUrl = options.articleUrl || 'content/sample_articles.json';
@@ -10,6 +18,13 @@
       this.list = null;
     }
 
+    /**
+     * Fetch JSON data with timeout handling.
+     * @param {string} url - Resource URL.
+     * @returns {Promise<any>} Parsed JSON data.
+     * @throws {Error} ContentFetchError when the request fails.
+     * @side effects Performs a network request.
+     */
     async fetchJSON(url) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), this.timeout);
@@ -24,6 +39,11 @@
       }
     }
 
+    /**
+     * Load articles from the configured URL and render them.
+     * @returns {Promise<void>}
+     * @side effects Updates DOM elements and internal state.
+     */
     async load() {
       try {
         this.setLoading(true);
@@ -36,6 +56,15 @@
       }
     }
 
+    /**
+     * Attach DOM elements and event listeners.
+     * @param {Object} opts - Selector options for inputs and list.
+     * @param {string} opts.searchInput - Selector for search input.
+     * @param {string} opts.categorySelect - Selector for category select.
+     * @param {string} opts.list - Selector for article list container.
+     * @returns {void}
+     * @side effects Registers event listeners and triggers initial load.
+     */
     attach(opts = {}) {
       this.searchInput = document.querySelector(opts.searchInput);
       this.categorySelect = document.querySelector(opts.categorySelect);
@@ -45,6 +74,11 @@
       this.load();
     }
 
+    /**
+     * Apply current filters and re-render the list.
+     * @returns {void}
+     * @side effects Updates the displayed article list.
+     */
     update() {
       const term = this.searchInput ? this.searchInput.value : '';
       const cat = this.categorySelect ? this.categorySelect.value : 'all';
@@ -52,6 +86,12 @@
       this.render(items);
     }
 
+    /**
+     * Filter loaded articles by term and category.
+     * @param {string} [term=''] - Search term.
+     * @param {string} [category='all'] - Category to filter by.
+     * @returns {Array} Filtered article list.
+     */
     filter(term = '', category = 'all') {
       const q = term.trim().toLowerCase();
       return this.articles.filter(a => {
@@ -63,6 +103,12 @@
       });
     }
 
+    /**
+     * Render the given items into the list container.
+     * @param {Array} items - Articles to display.
+     * @returns {void}
+     * @side effects Modifies the DOM.
+     */
     render(items) {
       if (!this.list) return;
       this.list.innerHTML = '';
@@ -85,22 +131,46 @@
       });
     }
 
+    /**
+     * Toggle bookmark state for an article.
+     * @param {string|number} id - Article identifier.
+     * @returns {void}
+     * @side effects Writes to storage.
+     */
     toggleBookmark(id) {
       const set = new Set(JSON.parse(this.storage.getItem('bookmarks') || '[]'));
       set.has(id) ? set.delete(id) : set.add(id);
       this.storage.setItem('bookmarks', JSON.stringify([...set]));
     }
 
+    /**
+     * Check if an article is bookmarked.
+     * @param {string|number} id - Article identifier.
+     * @returns {boolean} Whether the article is bookmarked.
+     */
     isBookmarked(id) {
       return JSON.parse(this.storage.getItem('bookmarks') || '[]').includes(id);
     }
 
+    /**
+     * Persist reading progress for an article.
+     * @param {string|number} id - Article identifier.
+     * @param {number} val - Progress ratio from 0 to 1.
+     * @returns {void}
+     * @side effects Writes to storage.
+     */
     saveProgress(id, val) {
       const prog = JSON.parse(this.storage.getItem('progress') || '{}');
       prog[id] = val;
       this.storage.setItem('progress', JSON.stringify(prog));
     }
 
+    /**
+     * Track scroll position and save progress for an article.
+     * @param {string|number} id - Article identifier.
+     * @returns {void}
+     * @side effects Adds a scroll listener.
+     */
     trackReading(id) {
       window.addEventListener('scroll', () => {
         const d = document.documentElement;
@@ -109,10 +179,21 @@
       });
     }
 
+    /**
+     * Toggle the loading state class on the list element.
+     * @param {boolean} on - Whether to show the loading state.
+     * @returns {void}
+     */
     setLoading(on) {
       this.list && this.list.classList.toggle('content--loading', on);
     }
 
+    /**
+     * Display an error message in the list container.
+     * @param {string} msg - Message to display.
+     * @returns {void}
+     * @side effects Modifies the DOM.
+     */
     setError(msg) {
       if (!this.list) return;
       this.list.textContent = msg;

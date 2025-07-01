@@ -1,4 +1,11 @@
 (function(global) {
+    /**
+     * Enable text filtering of posts within a list.
+     * @param {string} inputSelector - Selector for the search input.
+     * @param {string} listSelector - Selector for the list container.
+     * @returns {void}
+     * @side effects Adds an input event listener and hides/show elements.
+     */
     function setupSearch(inputSelector, listSelector) {
         const input = document.querySelector(inputSelector);
         const list = document.querySelector(listSelector);
@@ -12,6 +19,13 @@
         });
     }
 
+    /**
+     * Filter posts based on a category select element.
+     * @param {string} selectSelector - Selector for the dropdown.
+     * @param {string} listSelector - Selector for the list container.
+     * @returns {void}
+     * @side effects Adds a change listener and hides/show elements.
+     */
     function setupCategoryFilter(selectSelector, listSelector) {
         const select = document.querySelector(selectSelector);
         const list = document.querySelector(listSelector);
@@ -26,6 +40,13 @@
         });
     }
 
+    /**
+     * Filter posts when buttons are clicked.
+     * @param {string} buttonSelector - Selector for filter buttons.
+     * @param {string} listSelector - Selector for the list container.
+     * @returns {void}
+     * @side effects Adds click listeners and modifies the DOM.
+     */
     function setupButtonFilter(buttonSelector, listSelector) {
         const buttons = document.querySelectorAll(buttonSelector);
         const list = document.querySelector(listSelector);

@@ -1,6 +1,14 @@
 (function(global){
   'use strict';
 
+  /**
+   * Apply a light or dark theme to the document body.
+   * @param {HTMLElement} body - The document body element.
+   * @param {HTMLElement} [toggle] - Optional toggle element to update text.
+   * @param {string} theme - 'light' or 'dark'.
+   * @returns {boolean} True if dark theme is applied.
+   * @side effects Updates the DOM classes and toggle text.
+   */
   function applyTheme(body, toggle, theme) {
     var dark = theme === 'dark';
     body.classList.toggle('site--dark', dark);
@@ -69,6 +77,14 @@
     });
   }
 
+  /**
+   * Initialize all site scripts.
+   * @param {Window} [win=window] - Window context.
+   * @param {Document} [doc=document] - Document context.
+   * @param {Storage} [storage=win.localStorage] - Storage for user preferences.
+   * @returns {void}
+   * @side effects Attaches multiple event listeners and updates DOM elements.
+   */
   function init(win, doc, storage) {
     doc = doc || document;
     win = win || window;

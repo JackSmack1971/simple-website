@@ -64,9 +64,11 @@ test('smooth scroll links scroll to target', () => {
 test('filter utilities are invoked', () => {
   window.filterUtils = {
     setupSearch: jest.fn(),
-    setupCategoryFilter: jest.fn()
+    setupCategoryFilter: jest.fn(),
+    setupButtonFilter: jest.fn()
   };
   mainUtils.init(window, document, localStorage);
   expect(window.filterUtils.setupSearch).toHaveBeenCalled();
   expect(window.filterUtils.setupCategoryFilter).toHaveBeenCalled();
+  expect(window.filterUtils.setupButtonFilter).toHaveBeenCalled();
 });

@@ -26,7 +26,25 @@
         });
     }
 
-    const api = { setupSearch, setupCategoryFilter };
+    function setupButtonFilter(buttonSelector, listSelector) {
+        const buttons = document.querySelectorAll(buttonSelector);
+        const list = document.querySelector(listSelector);
+        if (!buttons.length || !list) return;
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const value = btn.dataset.topic;
+                buttons.forEach(b => b.classList.remove('filter-button--active'));
+                btn.classList.add('filter-button--active');
+                list.querySelectorAll('.post').forEach(item => {
+                    const meta = item.querySelector('.post__meta');
+                    const match = meta && meta.textContent.includes(value);
+                    item.style.display = value === 'all' || match ? '' : 'none';
+                });
+            });
+        });
+    }
+
+    const api = { setupSearch, setupCategoryFilter, setupButtonFilter };
     if (typeof module === 'object' && module.exports) {
         module.exports = api;
     } else {

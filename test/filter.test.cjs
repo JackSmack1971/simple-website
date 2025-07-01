@@ -36,3 +36,21 @@ test('setupCategoryFilter filters categories', () => {
   expect(posts[0].style.display).toBe('none');
   expect(posts[1].style.display).toBe('');
 });
+
+test('setupButtonFilter filters by topic', () => {
+  document.body.innerHTML = '<div class="research-preview__grid">' +
+    '<article class="post" data-topic="Vision"><p class="post__meta">Category: Vision</p></article>' +
+    '<article class="post" data-topic="NLP"><p class="post__meta">Category: NLP</p></article>' +
+    '</div>' +
+    '<button class="filter-button" data-topic="Vision"></button>' +
+    '<button class="filter-button" data-topic="all"></button>';
+  filterUtils.setupButtonFilter('.filter-button', '.research-preview__grid');
+  const buttons = document.querySelectorAll('.filter-button');
+  const posts = document.querySelectorAll('.post');
+  buttons[0].click();
+  expect(posts[0].style.display).toBe('');
+  expect(posts[1].style.display).toBe('none');
+  buttons[1].click();
+  expect(posts[0].style.display).toBe('');
+  expect(posts[1].style.display).toBe('');
+});

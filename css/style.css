@@ -431,3 +431,20 @@ textarea:focus-visible {
     .social,
     .loader { display: none !important; }
 }
+
+/* Content Manager */
+.content--loading::after {
+    content: 'Loading...';
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    color: var(--text-color);
+}
+
+.post__bookmark {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+}

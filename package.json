@@ -17,7 +17,8 @@
     "collectCoverageFrom": [
       "assets/js/filter.cjs",
       "assets/js/main.js",
-      "js/autocomplete.cjs"
+      "js/autocomplete.cjs",
+      "js/content-manager.js"
     ],
     "testMatch": [
       "**/?(*.)+(test).cjs"

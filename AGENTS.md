@@ -1,92 +1,137 @@
-# Simple-Website UX Enhancement Guide
+# Simple-Website Enhancement Guide
 
-## Repository Structure
+## Current Repository Structure
 ```
 simple-website/
-├── index.html              # Main HTML template
-├── css/                   # Stylesheets (style.css, performance-optimized.css)
-├── content/               # Content files and data
-├── assets/                # Images, fonts, icons
-└── docs/                  # Documentation
+├── README.md              # BEM-based CSS documentation
+├── index.html             # Main HTML template
+├── css/
+│   ├── style.css          # Current styles (has duplicate CSS variables to fix)
+│   ├── performance-optimized.css # Existing performance optimizations
+│   └── backup/            # Backup location for CSS files
+├── assets/
+│   ├── js/               # ES modules (main.js with theme toggle)
+│   ├── fonts/            # Target location for Inter & JetBrains Mono
+│   └── images/           # Existing images
+├── js/                   # Additional JS modules
+├── content/              # Content files and data
+└── docs/                 # Documentation (target for design-system.md)
+```
+
+## Critical Integration Requirements
+
+### CSS Conflict Resolution
+**PRIORITY**: Remove duplicate :root declarations in css/style.css under "/* homepage overrides */"
+- These cause theme conflicts and must be eliminated first
+- Replace hardcoded colors (border: 1px solid #ccc) with CSS custom properties
+- Maintain existing BEM structure (.site__header, .nav__menu--open)
+
+### Existing Features to Preserve
+- **Theme Toggle**: assets/js/main.js contains working .site--dark class functionality
+- **Content Management**: JS modules use fetchJSON with AbortController timeout handling
+- **Testing Framework**: Jest setup with DOM mocking and fetch stubbing in autocomplete.test.cjs
+- **Security Practices**: No hardcoded API keys, proper error handling patterns
+
+### Design System Integration Strategy
+**Step 1**: Create css/design-system/ structure with tokens.css, base.css, components/, utilities.css
+**Step 2**: Implement design tokens as specified:
+```css
+:root {
+  --color-primary: #0EA5E9;
+  --color-success: #10B981;
+  --color-accent: #6B46C1;
+  --color-orange: #FF6600;
+  --color-danger: #DC2626;
+  --font-body: 'Inter', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+}
+body.site--dark {
+  --bg-color: #0F172A;
+  --container-bg: #1E293B;
+  --text-color: #F8FAFC;
+}
 ```
 
 ## Development Guidelines
 
-### CSS Architecture
-- Maintain BEM methodology: `.block__element--modifier`
-- Use CSS custom properties for theming: `var(--color-primary)`
-- Follow mobile-first responsive approach
-- Organize styles: atoms → molecules → organisms → utilities
-
 ### JavaScript Standards
-- Use ES6+ modules and classes
-- Implement error handling for all async operations
-- Add JSDoc comments for public methods
-- Follow semantic naming conventions
+- **Maintain ES6+ modules** structure in assets/js/ and js/
+- **Preserve error handling** patterns: ContentFetchError, try/catch blocks
+- **Keep AbortController** timeout patterns for fetch operations
+- **Maintain theme toggle** functionality in assets/js/main.js
 
-### Accessibility Requirements
-- All interactive elements must have focus states
-- Implement proper ARIA labels and roles
-- Ensure 4.5:1 color contrast minimum
-- Support keyboard navigation throughout
-- Test with screen readers before completion
+### CSS Architecture Evolution
+- **Backup first**: Always copy existing CSS to css/backup/ before changes
+- **Preserve BEM**: Maintain existing .block__element--modifier patterns
+- **Use design tokens**: Replace hardcoded values with CSS custom properties
+- **Mobile-first**: Continue existing responsive approach
+
+### Performance Requirements
+- **Font loading**: Use font-display: swap for new Inter and JetBrains Mono fonts
+- **Maintain benchmarks**: Don't degrade existing performance-optimized.css benefits
+- **Core Web Vitals**: Keep current green scores with new features
 
 ## Testing Protocol
 
-### Required Validation Steps
-1. **Lighthouse Audit**: All scores 90+ (Performance, Accessibility, Best Practices, SEO)
-2. **Keyboard Testing**: Tab through entire interface, verify all functionality accessible
-3. **Screen Reader**: Test with at least one screen reader (NVDA/JAWS/VoiceOver)
-4. **Mobile Testing**: Verify responsive design on mobile devices
-5. **Cross-browser**: Test in Chrome, Firefox, Safari, Edge
+### Jest Framework Integration
+- **Preserve existing patterns**: DOM mocking, fetch stubbing from autocomplete.test.cjs
+- **Test new features**: Add tests for design system, enhanced accessibility, PWA
+- **Maintain compatibility**: Ensure existing tests continue to pass
+- **Error handling tests**: Extend ContentFetchError testing patterns
 
-### Performance Benchmarks
-- First Contentful Paint: < 1.5s
-- Largest Contentful Paint: < 2.5s
-- Cumulative Layout Shift: < 0.1
-- First Input Delay: < 100ms
+### Accessibility Testing
+- **WCAG 2.1 AA compliance**: 4.5:1 color contrast minimum (test both themes)
+- **Keyboard navigation**: Tab through interface, verify all functionality accessible
+- **Screen reader testing**: NVDA/JAWS/VoiceOver compatibility
+- **Focus management**: Proper focus indicators and logical tab order
+
+### Performance Validation
+- **Lighthouse audits**: Performance, Accessibility, Best Practices, SEO all 90+
+- **Core Web Vitals monitoring**: FCP < 1.5s, LCP < 2.5s, CLS < 0.1, FID < 100ms
+- **Font loading impact**: Monitor performance effect of new typography
+- **PWA performance**: Service worker caching shouldn't degrade metrics
+
+## Risk Management
+
+### Critical Issues to Address
+1. **CSS Variable Conflicts**: Eliminate duplicate declarations causing theme issues
+2. **Font Performance**: Ensure new fonts don't negatively impact Core Web Vitals
+3. **Dark Theme Compatibility**: Test all new features with both light/dark themes
+4. **Test Compatibility**: Maintain existing Jest test framework functionality
+
+### Rollback Procedures
+- **CSS Backup**: css/backup/ contains original style.css and performance-optimized.css
+- **Git History**: Maintain clear commit history for easy rollback
+- **Feature Flags**: Consider progressive rollout for major changes
+- **Performance Monitoring**: Continuous monitoring of Core Web Vitals
+
+## Security & Best Practices
+
+### Maintain Current Security Standards
+- **No API keys**: Continue pattern of no hardcoded secrets
+- **Input sanitization**: Follow existing security practices from AGENTS.md
+- **CSP compatibility**: Ensure new features work with Content Security Policy
+- **Error handling**: Preserve secure error handling without exposing internals
+
+### Progressive Enhancement Strategy
+- **Basic functionality first**: Ensure site works without JavaScript
+- **Layer enhancements**: Add features progressively
+- **Graceful fallbacks**: Provide alternatives for modern features
+- **Performance budget**: Don't exceed current loading benchmarks
 
 ## Implementation Notes
 
-### File Organization
-When creating new files:
-- CSS modules go in `/css/` subdirectory
-- JavaScript modules go in `/js/` subdirectory  
-- Create `/docs/` for implementation documentation
-- Use semantic, descriptive filenames
+### File Creation Priority
+1. **Backup existing CSS** to css/backup/
+2. **Create design system structure** in css/design-system/
+3. **Add fonts** to assets/fonts/ with optimized loading
+4. **Update imports** in css/style.css to use new design system
+5. **Test integration** with existing theme toggle functionality
 
-### Code Quality
-- Write self-documenting code with clear variable names
-- Add comments for complex logic or accessibility considerations
-- Include error handling and loading states
-- Validate HTML and CSS before completion
+### Quality Gates
+- **Before each phase**: Run existing Jest test suite
+- **After CSS changes**: Verify theme toggle still works in both modes
+- **After JS enhancements**: Test content management and error handling
+- **Before deployment**: Complete accessibility and performance audit
 
-### Progressive Enhancement
-- Ensure basic functionality works without JavaScript
-- Layer enhancements progressively
-- Provide fallbacks for modern CSS features
-- Test with JavaScript disabled
-
-## Content Strategy
-- Focus on Generative AI and machine learning topics
-- Maintain professional, accessible tone
-- Include clear calls-to-action
-- Optimize for search engine visibility
-
-## Security Considerations
-- Sanitize any user inputs
-- Use CSP headers for script security
-- Validate all external resources
-- Implement proper error handling without exposing internals
-
-## Pull Request Guidelines
-- Test all changes thoroughly before submitting
-- Include screenshots of visual changes
-- Document any breaking changes
-- Update this AGENTS.md if workflow changes
-
-## Troubleshooting
-- Check browser console for JavaScript errors
-- Validate HTML and CSS using W3C validators
-- Use browser dev tools for debugging layout issues
-- Test accessibility with automated tools and manual verification
+This guide ensures successful integration of UX enhancements while preserving the stability and performance of the existing codebase.

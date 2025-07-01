@@ -52,6 +52,7 @@ Run `npm run build` and upload the generated `dist/` directory to any static hos
 ## Customization Guide
 - **Add New Sections**: Copy an existing page from `pages/` and modify it to cover a new topic (e.g., "Tutorials"). Update navigation links in `index.html`.
 - **Styling**: Edit or extend styles in `css/`. Keep classes in BEM format and test on mobile as well as desktop.
+- **Homepage Overrides**: All inline homepage styles have been moved to `css/style.css` under the comment `/* homepage overrides */`.
 - **Scripts**: Modify `assets/js/` modules to add functionality. For any API calls, place keys in environment variables, validate inputs, and add retry logic with timeouts.
 - **Content Topics**: Replace sample files in `content/` with your own datasets. Use consistent naming to make filtering easier.
 

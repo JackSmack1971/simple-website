@@ -83,6 +83,10 @@
       utils.setupSearch('#news-search', '.news-list');
       utils.setupSearch('#paper-search', '.paper-list');
       utils.setupCategoryFilter('#category-filter', '.paper-list');
+      utils.setupButtonFilter('.filter-button', '.research-preview__grid');
+    }
+    if (win.autocompleteUtils) {
+      win.autocompleteUtils.init('#hero-search', '#hero-suggestions');
     }
   }
 

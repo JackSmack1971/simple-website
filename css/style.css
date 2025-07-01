@@ -89,6 +89,99 @@ body.site--dark {
     font-size: 2rem;
 }
 
+.hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.hero__copy {
+    max-width: 600px;
+}
+
+.hero__search {
+    position: relative;
+    margin-top: 1rem;
+}
+
+.hero__input {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.hero__suggestions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--bg-color);
+    border: 1px solid #ccc;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+}
+
+.hero__suggestion {
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+}
+
+.hero__suggestion:hover,
+.hero__suggestion:focus {
+    background-color: var(--header-bg);
+}
+
+.hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.hero__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.filter-button {
+    background: none;
+    border: 1px solid var(--link-color);
+    color: var(--link-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-button--active,
+.filter-button:focus {
+    background-color: var(--link-color);
+    color: #fff;
+}
+
+.hero__illustration img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (min-width: 768px) {
+    .hero__inner {
+        flex-direction: row;
+        text-align: left;
+    }
+    .hero__copy {
+        flex: 1;
+    }
+    .hero__illustration {
+        flex: 1;
+    }
+}
+
 .button {
     display: inline-block;
     padding: 0.5rem 1rem;

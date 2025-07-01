@@ -81,6 +81,7 @@
     <link rel="stylesheet" href="css/performance-optimized.css">
     <link rel="stylesheet" href="css/style.css">
     <script defer src="assets/js/filter.cjs"></script>
+    <script defer src="js/autocomplete.cjs"></script>
     <script defer src="assets/js/main.js"></script>
 </head>
 <body class="site site--light">
@@ -105,9 +106,30 @@
 
     <main id="main-content" class="site__content">
         <section class="hero fade-in">
-            <h2 class="hero__title">Stay Ahead of AI Developments</h2>
-            <p class="hero__text">Discover breakthroughs in generative models, industry news, and cutting‑edge research.</p>
-            <a href="pages/news.html" class="button">Read the Latest News</a>
+            <div class="hero__inner">
+                <div class="hero__copy">
+                    <h2 class="hero__title">Your Hub for Generative AI</h2>
+                    <p class="hero__text">Explore the latest breakthroughs, practical guides and in-depth research.</p>
+                    <form class="hero__search" role="search">
+                        <label for="hero-search" class="hero__label">Search articles</label>
+                        <input type="search" id="hero-search" class="hero__input" placeholder="Search AI topics" autocomplete="off">
+                        <ul id="hero-suggestions" class="hero__suggestions" role="listbox"></ul>
+                    </form>
+                    <div class="hero__actions">
+                        <a href="pages/news.html" class="button hero__cta">Latest News</a>
+                        <a href="pages/research.html" class="button hero__cta button--secondary">Research Library</a>
+                    </div>
+                    <div class="hero__filters" role="radiogroup" aria-label="Filter topics">
+                        <button class="filter-button" data-topic="all">All</button>
+                        <button class="filter-button" data-topic="NLP">NLP</button>
+                        <button class="filter-button" data-topic="Vision">Vision</button>
+                        <button class="filter-button" data-topic="Theory">Theory</button>
+                    </div>
+                </div>
+                <div class="hero__illustration" aria-hidden="true">
+                    <img src="assets/images/article-1200.txt" alt="" class="hero__image" width="600" height="300">
+                </div>
+            </div>
         </section>
         <section class="featured">
             <h3 class="featured__title">Featured Articles</h3>
@@ -129,17 +151,17 @@
         <section class="research-preview">
             <h3 class="research-preview__title">Recent Research Papers</h3>
             <div class="research-preview__grid">
-                <article class="post">
+                <article class="post" data-topic="Vision">
                     <h4 class="post__title"><a href="pages/paper.html">Diffusion Models for Image Synthesis</a></h4>
                     <p class="post__meta">Category: Vision</p>
                     <p class="post__excerpt">This paper explores diffusion models for high-resolution image synthesis...</p>
                 </article>
-                <article class="post">
+                <article class="post" data-topic="NLP">
                     <h4 class="post__title"><a href="pages/paper.html">Large Language Models as Zero-Shot Translators</a></h4>
                     <p class="post__meta">Category: NLP</p>
                     <p class="post__excerpt">We investigate how large language models perform translation tasks without fine-tuning...</p>
                 </article>
-                <article class="post">
+                <article class="post" data-topic="Theory">
                     <h4 class="post__title"><a href="pages/paper.html">Efficient Training of Generative Adversarial Networks</a></h4>
                     <p class="post__meta">Category: Theory</p>
                     <p class="post__excerpt">A new training regime reduces instability in GAN training and improves convergence...</p>

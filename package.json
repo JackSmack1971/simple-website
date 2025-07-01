@@ -16,7 +16,8 @@
     "transform": {},
     "collectCoverageFrom": [
       "assets/js/filter.cjs",
-      "assets/js/main.js"
+      "assets/js/main.js",
+      "js/autocomplete.cjs"
     ],
     "testMatch": [
       "**/?(*.)+(test).cjs"

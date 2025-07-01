@@ -1,4 +1,11 @@
 (function(global){
+  /**
+   * Fetch a list of suggestion objects from a URL.
+   * @param {string} url - The endpoint containing JSON suggestions.
+   * @returns {Promise<Array>} Resolves with an array of suggestions.
+   * @throws {Error} SuggestionFetchError if the request fails.
+   * @side effects Initiates a network request and uses a timeout.
+   */
   async function fetchSuggestions(url){
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 5000);
@@ -14,6 +21,13 @@
     }
   }
 
+  /**
+   * Initialize the autocomplete input behavior.
+   * @param {string} inputSel - Selector for the input element.
+   * @param {string} listSel - Selector for the list element to show suggestions.
+   * @returns {void}
+   * @side effects Adds event listeners and updates the DOM.
+   */
   function init(inputSel, listSel){
     const input = document.querySelector(inputSel);
     const list = document.querySelector(listSel);

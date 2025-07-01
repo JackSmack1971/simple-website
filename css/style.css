@@ -133,6 +133,10 @@ body.site--dark {
     background-color: var(--header-bg);
 }
 
+.hero__suggestion--active {
+    background-color: var(--header-bg);
+}
+
 .hero__actions {
     display: flex;
     flex-wrap: wrap;

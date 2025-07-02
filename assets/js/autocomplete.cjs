@@ -1,5 +1,5 @@
 // ========================================
-// FILE: assets/js/modal.cjs
+// FILE: js/autocomplete.cjs  
 // ========================================
 // Empty stub to prevent loading errors
-console.log('Modal module stub loaded');
+console.log('Autocomplete module stub loaded');

@@ -1,0 +1,28 @@
+html { scroll-behavior: smooth; }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  background: var(--header-bg);
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body, 'Segoe UI', Roboto, sans-serif);
+  line-height: 1.6;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}

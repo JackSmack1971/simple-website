@@ -1,0 +1,16 @@
+:root {
+  --color-primary: #0EA5E9;
+  --color-success: #10B981;
+  --color-accent: #6B46C1;
+  --color-orange: #FF6600;
+  --color-danger: #DC2626;
+  --font-body: 'Inter', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --border-color: #ccc;
+}
+
+body.site--dark {
+  --bg-color: #0F172A;
+  --container-bg: #1E293B;
+  --text-color: #F8FAFC;
+}

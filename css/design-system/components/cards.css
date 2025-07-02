@@ -1,0 +1,12 @@
+.post {
+  margin-bottom: 2rem;
+}
+
+.post__title {
+  margin: 0 0 0.5rem 0;
+}
+
+.post__meta {
+  font-size: 0.9rem;
+  color: #666;
+}

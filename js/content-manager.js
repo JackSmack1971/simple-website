@@ -7,9 +7,19 @@
    * @param {Storage} [options.storage=window.localStorage] - Storage used for bookmarks.
    * @param {number} [options.timeout=8000] - Fetch timeout in milliseconds.
    */
+  class ContentFetchError extends Error {
+    constructor(msg, cause) {
+      super(msg);
+      this.name = 'ContentFetchError';
+      this.cause = cause;
+    }
+  }
+
   class ContentManager {
     constructor(options = {}) {
       this.articleUrl = options.articleUrl || 'content/sample_articles.json';
+      this.searchUrl = options.searchUrl || this.articleUrl;
+      this.bookmarkUrl = options.bookmarkUrl;
       this.storage = options.storage || window.localStorage;
       this.timeout = options.timeout || 8000;
       this.articles = [];
@@ -25,17 +35,22 @@
      * @throws {Error} ContentFetchError when the request fails.
      * @side effects Performs a network request.
      */
-    async fetchJSON(url) {
+    async fetchJSON(url, options = {}) {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), this.timeout);
+      const t = options.timeout || this.timeout;
+      const timer = setTimeout(() => controller.abort(), t);
       try {
-        const res = await fetch(url, { signal: controller.signal });
+        const res = await fetch(url, { ...options, signal: controller.signal });
         clearTimeout(timer);
-        if (!res.ok) throw new Error('BadResponse');
+        if (!res.ok) throw new ContentFetchError('Bad response', res.statusText);
         return await res.json();
-      } catch (e) {
+      } catch (err) {
         clearTimeout(timer);
-        throw new Error('ContentFetchError');
+        if (err.name === 'AbortError') {
+          throw new ContentFetchError('Request timed out', err);
+        }
+        if (err instanceof ContentFetchError) throw err;
+        throw new ContentFetchError('Failed to fetch content', err);
       }
     }
 
@@ -104,6 +119,32 @@
     }
 
     /**
+     * Build a map of categories and their counts.
+     * @param {Array} [items=this.articles] - Articles list.
+     * @returns {Object} Category map.
+     */
+    categorize(items = this.articles) {
+      return items.reduce((map, a) => {
+        const key = (a.category || 'uncategorized').toLowerCase();
+        map[key] = (map[key] || 0) + 1;
+        return map;
+      }, {});
+    }
+
+    /**
+     * Fetch search results from the configured endpoint.
+     * @param {string} term - Search query.
+     * @returns {Promise<Array>} Articles matching the term.
+     */
+    async search(term) {
+      const q = encodeURIComponent(term.trim());
+      if (!q) return [];
+      const url = `${this.searchUrl}?q=${q}`;
+      const data = await this.fetchJSON(url);
+      return Array.isArray(data) ? data : [];
+    }
+
+    /**
      * Render the given items into the list container.
      * @param {Array} items - Articles to display.
      * @returns {void}
@@ -137,10 +178,20 @@
      * @returns {void}
      * @side effects Writes to storage.
      */
-    toggleBookmark(id) {
+    async toggleBookmark(id) {
       const set = new Set(JSON.parse(this.storage.getItem('bookmarks') || '[]'));
       set.has(id) ? set.delete(id) : set.add(id);
       this.storage.setItem('bookmarks', JSON.stringify([...set]));
+      if (!this.bookmarkUrl) return;
+      try {
+        await this.fetchJSON(this.bookmarkUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+      } catch (_) {
+        /* ignore remote bookmark errors */
+      }
     }
 
     /**
@@ -203,8 +254,9 @@
   }
 
   if (typeof module === 'object' && module.exports) {
-    module.exports = ContentManager;
+    module.exports = { ContentManager, ContentFetchError };
   } else {
     global.ContentManager = ContentManager;
+    global.ContentFetchError = ContentFetchError;
   }
 })(this);

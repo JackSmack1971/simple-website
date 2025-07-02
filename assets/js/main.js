@@ -105,11 +105,31 @@
     });
   }
 
-  function registerServiceWorker(win) {
+  class ServiceWorkerError extends Error {
+    constructor(msg, cause) {
+      super(msg); this.name = 'ServiceWorkerError'; this.cause = cause;
+    }
+  }
+
+  async function registerServiceWorker(win, timeout) {
     if (!('serviceWorker' in win.navigator)) return;
-    win.addEventListener('load', function(){
-      win.navigator.serviceWorker.register('/sw.js').catch(function(){});
-    });
+    timeout = timeout || 8000;
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort(); }, timeout);
+    try {
+      await Promise.race([
+        win.navigator.serviceWorker.register('/sw.js'),
+        new Promise(function(_, reject){
+          controller.signal.addEventListener('abort', function(){
+            reject(new ServiceWorkerError('Registration timed out'));
+          });
+        })
+      ]);
+    } catch (err) {
+      console.error(new ServiceWorkerError('Service worker registration failed', err));
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   /**

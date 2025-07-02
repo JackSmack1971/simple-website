@@ -21,13 +21,13 @@ test('all pages include manifest link', () => {
   });
 });
 
-test('service worker registers when supported', () => {
+test('service worker registers when supported', async () => {
   const html = fs.readFileSync('index.html', 'utf8');
   const dom = new JSDOM(html, { runScripts: 'outside-only', url: 'https://example.com' });
   const win = dom.window;
   win.navigator.serviceWorker = { register: jest.fn(() => Promise.resolve()) };
   win.matchMedia = () => ({ matches: false, addEventListener: () => {} });
-  win.addEventListener = (ev, cb) => { if (ev === 'load') cb(); };
   mainUtils.init(win, win.document, win.localStorage);
+  await Promise.resolve();
   expect(win.navigator.serviceWorker.register).toHaveBeenCalledWith('/sw.js');
 });

@@ -1,6 +1,6 @@
 const { JSDOM } = require('jsdom');
 
-const ContentManager = require('../js/content-manager.js');
+const { ContentManager, ContentFetchError } = require('../js/content-manager.js');
 
 describe('ContentManager', () => {
   let window, document, cm;
@@ -62,5 +62,35 @@ describe('ContentManager', () => {
     cm.setError('err');
     expect(list.textContent).toBe('err');
     expect(list.classList.contains('content--error')).toBe(true);
+  });
+
+  test('categorize groups articles', () => {
+    cm.articles = [
+      { id: 1, category: 'NLP' },
+      { id: 2, category: 'Vision' },
+      { id: 3, category: 'NLP' }
+    ];
+    const map = cm.categorize();
+    expect(map.nlp).toBe(2);
+    expect(map.vision).toBe(1);
+  });
+
+  test('search fetches remote data', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({ ok: true, json: () => Promise.resolve([{ id: 9 }]) }));
+    const res = await cm.search('ai');
+    expect(res.length).toBe(1);
+    expect(global.fetch).toHaveBeenCalled();
+  });
+
+  test('fetchJSON throws ContentFetchError on timeout', async () => {
+    global.fetch = () => new Promise((_, r) => setTimeout(() => r(new Error('fail')), 10));
+    await expect(cm.fetchJSON('url', { timeout: 5 })).rejects.toBeInstanceOf(ContentFetchError);
+  });
+
+  test('toggleBookmark posts to server when url provided', async () => {
+    cm.bookmarkUrl = '/bm';
+    global.fetch = jest.fn(() => Promise.resolve({ ok: true, json: () => Promise.resolve({}) }));
+    await cm.toggleBookmark(1);
+    expect(global.fetch).toHaveBeenCalled();
   });
 });

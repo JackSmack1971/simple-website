@@ -19,11 +19,15 @@
 @import url("design-system/utilities.css");
 */
 
+
+/* Consolidated theme variables */
+
 /* ========================================
    MAIN THEME VARIABLES (Single source of truth)
    ========================================
    Note: These are the only :root declarations for the site
 */
+
 :root {
     --bg-color: #ffffff;
     --text-color: #333333;

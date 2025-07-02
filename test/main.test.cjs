@@ -73,3 +73,19 @@ test('filter utilities are invoked', () => {
   expect(window.filterUtils.setupCategoryFilter).toHaveBeenCalled();
   expect(window.filterUtils.setupButtonFilter).toHaveBeenCalled();
 });
+
+test('install prompt is displayed and triggers prompt', async () => {
+  const promo = document.querySelector('.install-promo');
+  const btn = promo.querySelector('button');
+  mainUtils.init(window, document, localStorage);
+
+  const ev = new window.CustomEvent('beforeinstallprompt', { cancelable: true });
+  ev.prompt = jest.fn(() => Promise.resolve());
+  ev.userChoice = Promise.resolve({ outcome: 'accepted' });
+  window.dispatchEvent(ev);
+  expect(promo.hidden).toBe(false);
+
+  await btn.click();
+  expect(ev.prompt).toHaveBeenCalled();
+  expect(promo.hidden).toBe(true);
+});

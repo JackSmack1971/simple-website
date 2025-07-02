@@ -6,4 +6,5 @@
 - [x] Ensured color contrast meets WCAG 2.1 AA.
 - [x] Provided `aria-live` regions for news and research listings.
 - [x] Verified navigation and theme toggle are keyboard accessible.
-- [x] Ran automated Jest tests and manual keyboard navigation.
+- [x] Added focus management for the theme toggle and mobile menu.
+- [x] Ran automated Jest-axe tests and manual keyboard navigation.

@@ -59,7 +59,7 @@ Run `npm run build` and upload the generated `dist/` directory to any static hos
 ## Testing and Quality Checks
 - Cross-browser verification (Chrome, Firefox, Safari, Edge)
 - Mobile responsiveness checks via browser tools
-- Accessibility validation using Lighthouse or similar tools
+- Accessibility validation using Lighthouse or jest-axe
 - Performance optimization to maintain good Core Web Vitals
 - Automated unit tests can be run with `npm test`
 

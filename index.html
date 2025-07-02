@@ -20,9 +20,9 @@
     <header class="site__header">
         <div class="header__inner">
             <h1 class="site__title">Generative AI Hub</h1>
-            <nav class="nav" aria-label="Main navigation">
-                <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
-                <ul id="nav-menu" class="nav__menu">
+            <nav class="nav" aria-label="Main navigation" role="navigation">
+                <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" aria-haspopup="true">Menu</button>
+                <ul id="nav-menu" class="nav__menu" aria-hidden="true">
                     <li class="nav__item"><a href="index.html" class="nav__link nav__link--active">Home</a></li>
                     <li class="nav__item"><a href="pages/news.html" class="nav__link">News</a></li>
                     <li class="nav__item"><a href="pages/research.html" class="nav__link">Research</a></li>
@@ -30,7 +30,7 @@
                     <li class="nav__item"><a href="pages/contact.html" class="nav__link">Contact</a></li>
                 </ul>
             </nav>
-            <button class="theme-toggle" aria-label="Toggle dark mode">&#9788;</button>
+            <button class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">&#9788;</button>
         </div>
     </header>
 
@@ -43,7 +43,7 @@
                     <form class="hero__search" role="search">
                         <label for="hero-search" class="hero__label">Search articles</label>
                         <input type="search" id="hero-search" class="hero__input" placeholder="Search AI topics" autocomplete="off">
-                        <ul id="hero-suggestions" class="hero__suggestions" role="listbox" aria-live="polite"></ul>
+                        <ul id="hero-suggestions" class="hero__suggestions" role="listbox" aria-live="polite" aria-label="Search suggestions"></ul>
                     </form>
                     <div class="hero__actions">
                         <a href="pages/news.html" class="button hero__cta">Latest News</a>

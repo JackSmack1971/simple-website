@@ -12,7 +12,10 @@
   function applyTheme(body, toggle, theme) {
     var dark = theme === 'dark';
     body.classList.toggle('site--dark', dark);
-    if (toggle) toggle.textContent = dark ? '\u263E' : '\u2600';
+    if (toggle) {
+      toggle.textContent = dark ? '\u263E' : '\u2600';
+      toggle.setAttribute('aria-pressed', String(dark));
+    }
     return dark;
   }
 
@@ -33,10 +36,25 @@
     var navToggle = doc.querySelector('.nav__toggle');
     var navMenu = doc.getElementById('nav-menu');
     if (!navToggle || !navMenu) return;
+    var firstLink = navMenu.querySelector('a');
+    navMenu.setAttribute('aria-hidden', 'true');
+
+    function trap(e) {
+      if (e.key === 'Escape') navToggle.click();
+    }
+
     navToggle.addEventListener('click', function(){
       var expanded = navToggle.getAttribute('aria-expanded') === 'true';
       navToggle.setAttribute('aria-expanded', String(!expanded));
       navMenu.classList.toggle('nav__menu--open');
+      navMenu.setAttribute('aria-hidden', String(expanded));
+      if (!expanded) {
+        firstLink && firstLink.focus();
+        navMenu.addEventListener('keydown', trap);
+      } else {
+        navMenu.removeEventListener('keydown', trap);
+        navToggle.focus();
+      }
     });
   }
 

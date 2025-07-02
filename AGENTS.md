@@ -135,3 +135,53 @@ body.site--dark {
 - **Before deployment**: Complete accessibility and performance audit
 
 This guide ensures successful integration of UX enhancements while preserving the stability and performance of the existing codebase.
+
+---
+
+## 🎯 Codex Execution Strategy for Existing Codebase
+
+### Context-Aware Execution
+Based on the codebase analysis, this prompt chain is designed to:
+- **Build on existing structure**: Leverages current BEM methodology, ES modules, and Jest testing
+- **Address identified issues**: Fixes CSS variable conflicts and performance concerns
+- **Maintain compatibility**: Preserves existing functionality while adding enhancements
+- **Follow established patterns**: Uses current security practices and architectural decisions
+
+### Parallel Task Groups
+**Group A (Foundation Refactoring)**: Tasks 1A, 1B, 1C address the core architectural improvements identified in the analysis while maintaining existing functionality.
+
+**Group B (Feature Enhancement)**: Tasks 2A, 2B, 2C build on the existing JS module architecture and content management system.
+
+**Group C (Advanced Integration)**: Tasks 3A, 3B, 3C focus on testing, accessibility, and documentation using established patterns.
+
+**Group D (Final Validation)**: Tasks 4A, 4B ensure complete system integration and deployment readiness.
+
+### Risk Mitigation Strategy
+**CSS Conflict Prevention**:
+- Backup existing files before refactoring (css/backup/)
+- Remove duplicate variable declarations identified in analysis
+- Test theme toggle functionality throughout each phase
+
+**Performance Protection**:
+- Monitor Core Web Vitals impact of font integration
+- Validate that existing performance-optimized.css patterns remain effective
+- Test service worker caching doesn't degrade current performance
+
+**Testing Continuity**:
+- Maintain compatibility with existing Jest test patterns
+- Preserve DOM mocking and fetch stubbing approaches
+- Ensure new features integrate with autocomplete.test.cjs patterns
+
+### Integration Checkpoints
+After each phase, verify:
+1. **Existing functionality preserved**: Theme toggle, content management, navigation
+2. **Jest tests still pass**: No breaking changes to test framework
+3. **Performance maintained**: Lighthouse scores remain consistent
+4. **Accessibility improved**: WCAG compliance enhanced without breaking existing features
+
+### Success Metrics for Existing Codebase
+- **Design System Integration**: CSS conflicts resolved, design tokens functional
+- **Performance Maintenance**: Core Web Vitals remain green with new fonts
+- **Feature Enhancement**: Content management improved without breaking existing patterns
+- **Testing Coverage**: Jest framework enhanced to cover new functionality
+- **Accessibility Upgrade**: WCAG 2.1 AA compliance achieved while maintaining current features

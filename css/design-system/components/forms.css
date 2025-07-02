@@ -1,0 +1,11 @@
+.hero__input,
+.search__input,
+.search__select {
+  padding: 0.25rem;
+  font-size: 1rem;
+}
+
+.newsletter__form {
+  max-width: 400px;
+  margin: 0 auto;
+}

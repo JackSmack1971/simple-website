@@ -105,6 +105,13 @@
     });
   }
 
+  function registerServiceWorker(win) {
+    if (!('serviceWorker' in win.navigator)) return;
+    win.addEventListener('load', function(){
+      win.navigator.serviceWorker.register('/sw.js').catch(function(){});
+    });
+  }
+
   /**
    * Initialize all site scripts.
    * @param {Window} [win=window] - Window context.
@@ -122,6 +129,7 @@
     initFadeIn(doc, win);
     initSmoothScroll(doc);
     initLoader(win, doc);
+    registerServiceWorker(win);
     if (win.filterUtils) {
       var utils = win.filterUtils;
       utils.setupSearch('#news-search', '.news-list');

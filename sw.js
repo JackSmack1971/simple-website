@@ -66,9 +66,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(staleWhileRevalidate(request, RUNTIME));
     return;
   }
-  if (request.headers.get('accept') && request.headers.get('accept').includes('text/html')) {
+  if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => caches.match('offline.html'))
     );
+    return;
   }
 });

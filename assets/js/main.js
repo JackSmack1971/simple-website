@@ -113,6 +113,30 @@
   }
 
   /**
+   * Show install promotion when available.
+   * @param {Window} win - Window context.
+   * @param {Document} doc - Document context.
+   * @returns {void}
+   */
+  function initInstallPrompt(win, doc) {
+    var container = doc.querySelector('.install-promo');
+    if (!container) return;
+    var button = container.querySelector('.install-promo__button');
+    var deferred;
+    win.addEventListener('beforeinstallprompt', function(e){
+      e.preventDefault();
+      deferred = e;
+      container.hidden = false;
+    });
+    button && button.addEventListener('click', async function(){
+      if (!deferred) return;
+      container.hidden = true;
+      deferred.prompt();
+      try { await deferred.userChoice; } finally { deferred = null; }
+    });
+  }
+
+  /**
    * Initialize all site scripts.
    * @param {Window} [win=window] - Window context.
    * @param {Document} [doc=document] - Document context.
@@ -130,6 +154,7 @@
     initSmoothScroll(doc);
     initLoader(win, doc);
     registerServiceWorker(win);
+    initInstallPrompt(win, doc);
     if (win.filterUtils) {
       var utils = win.filterUtils;
       utils.setupSearch('#news-search', '.news-list');

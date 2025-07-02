@@ -18,6 +18,8 @@
     "collectCoverageFrom": [
       "assets/js/filter.cjs",
       "assets/js/main.js",
+      "assets/js/modal.cjs",
+      "assets/js/forms.cjs",
       "js/autocomplete.cjs",
       "js/content-manager.js"
     ],

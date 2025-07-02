@@ -19,12 +19,22 @@
     return dark;
   }
 
-  function initTheme(doc, storage) {
+  function initTheme(doc, storage, win) {
     var toggle = doc.querySelector('.theme-toggle');
     if (!toggle) return;
     var body = doc.body;
     var saved = storage && storage.getItem('theme');
-    if (saved) applyTheme(body, toggle, saved);
+    var system = win.matchMedia('(prefers-color-scheme: dark)');
+    if (saved) {
+      applyTheme(body, toggle, saved);
+    } else if (system.matches) {
+      applyTheme(body, toggle, 'dark');
+    }
+    system.addEventListener('change', function(e){
+      if (!storage.getItem('theme')) {
+        applyTheme(body, toggle, e.matches ? 'dark' : 'light');
+      }
+    });
     toggle.addEventListener('click', function(){
       var newTheme = body.classList.contains('site--dark') ? 'light' : 'dark';
       applyTheme(body, toggle, newTheme);
@@ -108,7 +118,7 @@
     win = win || window;
     storage = storage || win.localStorage;
     initNavigation(doc);
-    initTheme(doc, storage);
+    initTheme(doc, storage, win);
     initFadeIn(doc, win);
     initSmoothScroll(doc);
     initLoader(win, doc);
@@ -121,6 +131,12 @@
     }
     if (win.autocompleteUtils) {
       win.autocompleteUtils.init('#hero-search', '#hero-suggestions');
+    }
+    if (win.formUtils) {
+      win.formUtils.initNewsletterForm('.newsletter__form');
+    }
+    if (win.modalUtils) {
+      win.modalUtils.initModal(null, '#subscribe-modal');
     }
   }
 

@@ -11,6 +11,7 @@ beforeEach(() => {
   window = dom.window;
   document = window.document;
   localStorage = window.localStorage;
+  window.matchMedia = () => ({ matches: false, addEventListener: () => {} });
 });
 
 test('applyTheme sets dark mode', () => {

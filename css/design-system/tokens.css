@@ -22,6 +22,7 @@
   --font-body: 'Inter', sans-serif;
   --font-code: 'JetBrains Mono', monospace;
   --border-color: #ccc;
+  --transition-duration: 0.3s;
 }
 
 body.site--dark {

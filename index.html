@@ -12,6 +12,8 @@
     <script defer src="assets/js/filter.cjs"></script>
     <script defer src="js/autocomplete.cjs"></script>
     <script defer src="assets/js/main.js"></script>
+    <script defer src="assets/js/modal.cjs"></script>
+    <script defer src="assets/js/forms.cjs"></script>
     <script type="module" src="js/content-manager.js"></script>
 </head>
 <body class="site site--light">
@@ -106,6 +108,12 @@
                 <button type="submit" class="button">Sign Up</button>
             </form>
         </section>
+        <div id="subscribe-modal" class="modal" aria-hidden="true" tabindex="-1">
+            <div class="modal__content">
+                <button class="modal__close" aria-label="Close">&times;</button>
+                <p class="modal__text" role="alert">Thank you for subscribing!</p>
+            </div>
+        </div>
     </main>
 
     <footer class="site__footer">

@@ -3,7 +3,6 @@
 @import url("design-system/components/buttons.css");
 @import url("design-system/components/cards.css");
 @import url("design-system/components/forms.css");
-@import url("design-system/components/modal.css");
 @import url("design-system/utilities.css");
 
 
